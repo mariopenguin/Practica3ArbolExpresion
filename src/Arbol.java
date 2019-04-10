@@ -126,7 +126,7 @@ public class Arbol {
         }
     }
 
-
+    //EJERCICIO 1
     public int sumaDatosImparesHijos(){
         return sumaDatosImparesHijosRec(raiz);
     }
@@ -146,5 +146,71 @@ public class Arbol {
         }
 
     }
+    //Ejercicio 2
+
+
+    public int sumarDatosNivel(int nivel){
+        return sumarDatosNivelRec(raiz,nivel,1);
+    }
+
+
+    private int sumarDatosNivelRec(NodoArbol nodo,Integer nivel,int nivelNodo){
+
+        if (nodo==null){
+            return 0;           //Si el nodo es null devolvemos 0
+        }
+        else{
+            if (nivelNodo==nivel){
+                return nodo.getClave(); //Si el nivel del nodo es el nivel requerido devolvemos su valor
+            }
+
+            else{
+
+                if (nivelNodo>nivel){ //En caso de que el nivel requerido sea mayor, devolvemos 0
+                    return 0;
+                }
+                else{   //Mientras que el nivel sea menor, llamamos de forma recursiva a sus nodos hijos, tanto izquierdo como derecho
+                    return sumarDatosNivelRec(nodo.getIz(),nivel,nivelNodo+1)+sumarDatosNivelRec(nodo.getDe(),nivel,nivelNodo+1);
+                }
+            }
+        }
+    }
+
+
+    //Ejercicio 3
+
+    /*  null----> condicion de parada
+        nodo con 2 hijos -------> recursividad
+        nodo con 1 hijo  -------> creamos nodo y recursividad
+        nodo sin hijos ----> condicion de parada (no hacer nada)
+     */
+
+    public void completar2Hijos(){
+        completar2HijosRec(raiz,1);
+    }
+
+
+    private void completar2HijosRec(NodoArbol nodo,int nivel){
+        if (nodo !=null){ //Mi nodo es distinto de null
+         if (nodo.getIz()!=null && nodo.getDe()!=null){ //Llamada recursiva, el nodo tiene hijos no nulos
+             completar2HijosRec(nodo.getIz(),nivel+1);
+             completar2HijosRec(nodo.getDe(),nivel+1);
+         }
+         else{ //Algún hijo es null, ahora preguntamos cual
+             NodoArbol nuevo = new NodoArbol((char) (nivel+1),null,null);
+             if (nodo.getIz()!=null){ //Izdo no null pero derecho null
+                 nodo.setDe(nuevo);
+                 completar2HijosRec(nodo.getDe(),nivel+1);
+             }
+             else{
+                 nodo.setIz(nuevo);
+                 completar2HijosRec(nodo.getIz(),nivel+1);
+             }
+
+         }
+         //En el caso de que no tenga hijos, no hacemos nada
+        }
+    }
+
 
 }
