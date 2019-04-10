@@ -127,4 +127,24 @@ public class Arbol {
     }
 
 
+    public int sumaDatosImparesHijos(){
+        return sumaDatosImparesHijosRec(raiz);
+    }
+    private int sumaDatosImparesHijosRec(NodoArbol nodo){
+        if(nodo == null){       //Preguntamos si mi nodo actual es null y devolvemos 0 para la suma
+            return 0;
+        }
+        else{
+            if (nodo.getClave()%2==1 &&nodo.getIz()!=null &&nodo.getDe()!=null){ //Si es impar y sus hijos son distintos de null:
+
+                return nodo.getClave()+sumaDatosImparesHijosRec(nodo.getIz())+sumaDatosImparesHijosRec(nodo.getDe());
+            }
+            else{       //En caso de que la clave del nodo actual sea par, devolvemos la suma de su rama izda y derecha (se devolveran solo los impares)
+                return sumaDatosImparesHijosRec(nodo.getIz())+sumaDatosImparesHijosRec(nodo.getDe());
+
+            }
+        }
+
+    }
+
 }

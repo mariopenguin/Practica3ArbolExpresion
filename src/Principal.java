@@ -8,13 +8,9 @@ public class Principal {
      //System.out.println(arbol.postOrden());
      char resta = '-';
      System.out.println(arbol2.postOrden());
-
+     System.out.println(arbol.sumaDatosImparesHijos());
         System.out.println(arbol.operacion(2,2,'+'));
-        arbol.operacion(2,2,'-');
 
-        arbol.operacion(2,2,'*');
-
-        arbol.operacion(2,2,'/');
 
     }
 }
