@@ -25,67 +25,10 @@ public class Arbol {
     }
 
     // Escribe las claves del Árbol binario de raiz a en postorden.
-    public String postOrden1(NodoArbol nodo) {
-
-        if (nodo != null) {
-           // System.out.print(nodo.getClave());
-            calcular(nodo);
-            return postOrden1(nodo.getIz())+postOrden1(nodo.getDe())+nodo.getClave();
-        }
-        return "";
-
-    }
-    public String postOrden() {
-        //System.out.print ("Post orden: ");
-        return postOrden1(raiz);
-
-    }
-
-    public float calcularValor(){
-        float resul= 0;
 
 
-        return resul;
-    }
-    private float calcular(NodoArbol nodo){
-        float resul=0;
-        if (nodo!= null){
-            if (MetodosAE.esOperador(nodo.getClave()) && MetodosAE.esDigito(nodo.getIz().getClave()) && MetodosAE.esDigito(nodo.getDe().getClave())){
-                int izdo =MetodosAE.pasarAEntero(nodo.getIz().getClave());
-                int derecho =MetodosAE.pasarAEntero(nodo.getDe().getClave());
-                resul= operacion(izdo,derecho,nodo.getClave());
-                nodo.setClave((char) resul);
-                System.out.println(resul);
-            }
-        }
-
-        return resul;
-    }
-    public  void postOrden2(NodoArbol nodo) {
-
-        if (nodo != null) {
-            // System.out.print(nodo.getClave());
-
-            postOrden2(nodo.getIz());postOrden1(nodo.getDe());nodo.getClave();
-            postOrden2(nodo);
-        }
 
 
-    }
-    public float operacion(int n1,int n2, char operando){
-        switch (operando){
-        case '-':
-            return n1 - n2;
-            case '+':
-                return n1+n2;
-            case '*':
-                return n1*n2;
-            case '/':
-                return n1/n2;
-
-        }
-        return 0;
-    }
     // Escribe las claves del �rbol binario de raiz a en orden central.
     private void ordenCentral(NodoArbol nodo) {
         if (nodo != null) {
@@ -126,6 +69,77 @@ public class Arbol {
         }
     }
 
+    public String postOrdenRec(NodoArbol nodo) {
+
+        if (nodo != null) {
+            // System.out.print(nodo.getClave());
+
+            return postOrdenRec(nodo.getIz()) + postOrdenRec(nodo.getDe()) + nodo.getClave();
+        }
+        return "";
+
+    }
+
+    public String postOrden() {
+        //System.out.print ("Post orden: ");
+        return postOrdenRec(raiz);
+
+    }
+
+    public float calcularValor() {
+        float resul = 0;
+        resul = calcularRec(raiz);
+
+        return resul;
+    }
+
+    private float calcularRec(NodoArbol nodo) {
+        float resul = 0;
+        float izdo, derecho;
+        izdo = 0;
+        derecho = 0;
+
+        if (nodo != null) {
+            if (MetodosAE.esOperador(nodo.getClave())) {
+                if (nodo.getIz() != null) {
+                    izdo = calcularRec(nodo.getIz());
+                    if (nodo.getIz().getIz() == null) {
+                        izdo = MetodosAE.pasarAEntero((char) izdo);
+                    }
+                    System.out.println(izdo);
+                }
+                if (nodo.getDe() != null) {
+                    derecho = calcularRec(nodo.getDe());
+                    if (nodo.getDe().getDe() == null) {
+                        derecho = MetodosAE.pasarAEntero((char) derecho);
+                    }
+                }
+                resul = operacion(izdo, derecho, nodo.getClave());
+                return resul;
+
+            } else {
+                return nodo.getClave();
+            }
+        }
+        return 0;
+
+    }
+
+    public float operacion(float n1, float n2, char operando) {
+
+        switch (operando) {
+            case '-':
+                return n1 - n2;
+            case '+':
+                return n1 + n2;
+            case '*':
+                return n1 * n2;
+            case '/':
+                return n1 / n2;
+
+        }
+        return 0;
+    }
     //EJERCICIO 1
     public int sumaDatosImparesHijos(){
         return sumaDatosImparesHijosRec(raiz);
